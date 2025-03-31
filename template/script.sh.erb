@@ -2,10 +2,12 @@
 module purge
 
 # load RStudio Server
-module load <%= context.Rserver %>
+module load <%= context.rserver %>
+
+# TODO - add to library path if user has chosen a seurat module
 
 # load R
-module load <%= context.Rapp %>
+# module load <^= context.Rapp %>
 
 #
 # Start RStudio Server
