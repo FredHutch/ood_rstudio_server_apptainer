@@ -1,5 +1,5 @@
 ---
-name: Fred Hutch RStudio Server
+name: RStudio Server/Apptainer
 category: Interactive Apps
 role: batch_connect
 description: |
