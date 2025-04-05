@@ -1,8 +1,19 @@
 #!/usr/bin/env bash
+
+set -e
+set -x
+
+
 module purge
 
 # load RStudio Server
-module load <%= context.rserver %>
+# This will cause an error on the chorus partition, 
+# apptainer is an OS module there.
+# TODO handle that
+module load Apptainer
+
+
+  
 
 # TODO - add to library path if user has chosen a seurat module
 
@@ -59,14 +70,46 @@ module list
 # Launch the RStudio Server
 echo "Starting up rserver..."
 set -x
-rserver \
+# rserver \
+#   --www-port ${port} \
+#   --auth-none 0 \
+#   --auth-pam-helper-path "${RSTUDIO_AUTH}" \
+#   --auth-encrypt-password 0 \
+#   --rsession-path "${RSESSION_WRAPPER_FILE}" \
+#   --server-data-dir "${TMPDIR}" \
+#   --secure-cookie-key-file "${TMPDIR}/rstudio-server/secure-cookie-key" \
+#   --database-config-file "${DBCONF}" \
+#   --server-user $(whoami)
+
+
+export MYTEMP=/loc/scratch/${SLURM_JOB_ID}/$(date +%s)
+
+
+# we can't use $(pwd) because rstudio complains that the directory path
+# is too long
+
+mkdir -p $MYTEMP
+mkdir -p $MYTEMP/rstudio-server
+
+
+apptainer exec \
+  --scratch /run,/var/lib/rstudio-server \
+  --bind /fh/fast:/fh/fast \
+  --bind /hpc/temp:/hpc/temp \
+  --bind /fh/working:/fh/working \
+  --bind /fh/secure:/fh/secure \
+  --workdir $(mktemp -d) \
+  <%= context.rserver %> \
+  rserver \
   --www-port ${port} \
+  --www-address=0.0.0.0 \
   --auth-none 0 \
   --auth-pam-helper-path "${RSTUDIO_AUTH}" \
   --auth-encrypt-password 0 \
   --rsession-path "${RSESSION_WRAPPER_FILE}" \
-  --server-data-dir "${TMPDIR}" \
-  --secure-cookie-key-file "${TMPDIR}/rstudio-server/secure-cookie-key" \
+  --server-data-dir "${MYTEMP}" \
+  --secure-cookie-key-file "${MYTEMP}/rstudio-server/secure-cookie-key" \
   --database-config-file "${DBCONF}" \
   --server-user $(whoami)
 
+echo will we ever see this
