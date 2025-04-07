@@ -40,4 +40,5 @@ attributes:
     label: "R Module Version"
     options:
       - [ "R/4.4.2 with Bioconductor 3.20 OS dependencies", "/app/containers/bioconductor_docker_RELEASE_3_20.sif"]
+      - [ "R/4.5 (devel) with Bioconductor 3.21 OS dependencies", "/app/containers/bioconductor_docker_devel.sif"]
 
