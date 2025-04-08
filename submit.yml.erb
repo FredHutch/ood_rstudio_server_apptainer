@@ -1,3 +1,11 @@
+<%-
+base_slurm_args = ["--nodes=1", "--ntasks-per-node=#{num_cores.to_i}", "--partition=vnc"]
+if want_gpu == "1"
+  base_slurm_args += ["--gres=gpu"]
+end
+
+-%>
+
 ---
 batch_connect:
   template: "basic"
@@ -6,9 +14,7 @@ batch_connect:
 
 # TODO remove this when we move to the gizmo cluster (actually change the partition to `interactive`)
 script:
-  native: [
-    "-p", "vnc",
-  <% if want_gpu == "1" %>
-    "--gres=gpu"
-  <% end %>
-  ]
+  native: 
+  <%- base_slurm_args.each do |arg| %>
+    - "<%= arg %>"
+  <%- end %>  
