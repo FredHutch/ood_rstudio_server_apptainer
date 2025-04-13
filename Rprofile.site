@@ -1,0 +1,36 @@
+
+# This file is from https://github.com/FredHutch/ood_rstudio_server_apptainer
+# mount at /usr/local/lib/R/etc/Rprofile.site:ro
+
+# The container we are using does not have an `rsession` command
+# so we use this file to modify the .libPaths(). We do not want
+# to use the normal user library path, because the 
+# easybuild module-based R's use that, and this R is 
+# not binary-compatible with that (bionic vs noble, OS packages
+# vs easybuild dependencies, newer glibc, etc.)
+
+local({
+
+    options(repos = c(CRAN = 'https://p3m.dev/cran/__linux__/noble/latest'), download.file.method = 'libcurl')
+    # https://docs.rstudio.com/rspm/admin/serving-binaries/#binaries-r-configuration-linux
+    options(HTTPUserAgent = sprintf("R/%s R (%s)", getRversion(), paste(getRversion(), R.version["platform"], R.version["arch"], R.version["os"])))
+
+    # if any element of .libPaths() starts with "/home", remove it
+    if (any(grepl("^/home", .libPaths()))) {
+        .libPaths(.libPaths()[!grepl("^/home", .libPaths())])
+    }
+
+    version <- paste0(R.version$major, ".", substr(R.version$minor, 1, 1), "-apptainer")
+    localPath <- file.path("/home", Sys.info()[["user"]], "R", "x86_64-pc-linux-gnu-library", version)
+    dir.create(localPath, recursive = TRUE, showWarnings = FALSE)
+
+    .libPaths(c(localPath, .libPaths()))
+
+    # rm(c(
+    # version,
+    # localPath,
+    # minor
+    # ))
+
+})
+

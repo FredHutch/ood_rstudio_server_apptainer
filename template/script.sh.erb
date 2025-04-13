@@ -89,6 +89,7 @@ apptainer version
 
 apptainer exec \
   --scratch /run,/var/lib/rstudio-server \
+  --bind /app/containers/Rprofile.site:/usr/local/lib/R/etc/Rprofile.site:ro \
   --bind /fh/fast:/fh/fast \
   --bind /hpc/temp:/hpc/temp \
   --bind /fh/working:/fh/working \
