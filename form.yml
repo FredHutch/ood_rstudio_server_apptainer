@@ -1,5 +1,5 @@
 ---
-cluster: "skagit"
+cluster: "gizmo"
 form:
 # do these names need to be lowercase? It seems Rserver later cannot be found
 # but rserver shows up in the context json file. Changing it here to be consistent.

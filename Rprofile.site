@@ -25,7 +25,7 @@ local({
     dir.create(localPath, recursive = TRUE, showWarnings = FALSE)
 
     .libPaths(c(localPath, .libPaths()))
-    options(bitmapType="Cairo")
+    options(bitmapType="cairo")
 
     # rm(c(
     # version,

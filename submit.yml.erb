@@ -1,5 +1,5 @@
 <%-
-base_slurm_args = ["--nodes=1", "--ntasks-per-node=#{num_cores.to_i}", "--partition=vnc"]
+base_slurm_args = ["--nodes=1", "--ntasks-per-node=#{num_cores.to_i}", "--partition=interactive"]
 if want_gpu == "1"
   base_slurm_args += ["--gres=gpu"]
 end
