@@ -1,44 +1,49 @@
 ---
 cluster: "gizmo"
 form:
-# do these names need to be lowercase? It seems Rserver later cannot be found
-# but rserver shows up in the context json file. Changing it here to be consistent.
-  - rserver
-  # - Rapp
-  - bc_num_hours
-  # TODO: check if OOD is configured to send email, I checked this box and did not get email.
-  - bc_email_on_started
-  - num_cores
-  - want_gpu
+    # do these names need to be lowercase? It seems Rserver later cannot be found
+    # but rserver shows up in the context json file. Changing it here to be consistent.
+    - rserver
+    # - Rapp
+    - bc_num_hours
+    # TODO: check if OOD is configured to send email, I checked this box and did not get email.
+    - bc_email_on_started
+    - num_cores
+    - want_gpu
 attributes:
-  want_gpu:
-    widget: "check_box"
-    label: "Request a GPU"
-    help: |
-      Request a GPU for your RStudio session. The default is no GPU.
-    value: false
-    id: 'want_gpu'
-  num_cores:
-    widget: "number_field"
-    label: "Number of cores"
-    value: 2
-    help: |
-      Number of cores to run RStudio with. The default is 2.
-    min: 1
-    # TODO what should the maximum be?
-    max: 8
-    step: 1
-    id: 'num_cores'
-# it's optional to put bc_num_hours here; if left out, it will still show up in the form, but
-# putting us here allows us to set a maximum:
-  bc_num_hours:
-    min: 1
-    max: 8
-    step: 1
-  rserver:
-    widget: select
-    label: "R Module Version"
-    options:
-      - [ "R/4.4.2 with Bioconductor 3.20 OS dependencies", "https://sif-registry.fredhutch.org/bioconductor_docker_RELEASE_3_20.sif"]
-      - [ "R/4.5 (devel) with Bioconductor 3.21 OS dependencies", "https://sif-registry.fredhutch.org/bioconductor_docker_devel.sif"]
-
+    want_gpu:
+        widget: "check_box"
+        label: "Request a GPU"
+        help: |
+            Request a GPU for your RStudio session. The default is no GPU.
+        value: false
+        id: "want_gpu"
+    num_cores:
+        widget: "number_field"
+        label: "Number of cores"
+        value: 2
+        help: |
+            Number of cores to run RStudio with. The default is 2.
+        min: 1
+        # TODO what should the maximum be?
+        max: 8
+        step: 1
+        id: "num_cores"
+    # it's optional to put bc_num_hours here; if left out, it will still show up in the form, but
+    # putting us here allows us to set a maximum:
+    bc_num_hours:
+        min: 1
+        max: 8
+        step: 1
+    rserver:
+        widget: select
+        label: "R Module Version"
+        options:
+            - [
+                  "R/4.4.2 with Bioconductor 3.20 OS dependencies",
+                  "https://sif-registry.fredhutch.org/bioconductor_docker_RELEASE_3_20.sif",
+              ]
+            - [
+                  "R/4.5.0 with Bioconductor 3.21 OS dependencies",
+                  "https://sif-registry.fredhutch.org/bioconductor_bioconductor_docker_RELEASE_3_21.sif",
+              ]
