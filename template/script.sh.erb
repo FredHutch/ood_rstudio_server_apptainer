@@ -1,12 +1,24 @@
 #!/usr/bin/env bash
 
+<%
+
+sif_file = ""
+
+if context.custom_sif.empty?
+  sif_file = context.rserver
+else
+  sif_file = context.custom_sif
+end
+
+%>
+
 set -e
 # set -x
 
 
 
 # load RStudio Server
-# This will cause an error on the chorus partition, 
+# This will cause an error on the chorus partition,
 # apptainer is an OS module there, so we only do this on gizmo.
 if [[ $HOSTNAME == gizmo* ]] ;
 then
@@ -97,7 +109,7 @@ apptainer exec \
   --bind /tmp:/tmp \
   --bind /loc:/loc \
   --workdir $(mktemp -d) \
-  <%= context.rserver %> \
+  <%= sif_file %> \
   rserver \
   --www-port ${port} \
   --www-address=0.0.0.0 \
