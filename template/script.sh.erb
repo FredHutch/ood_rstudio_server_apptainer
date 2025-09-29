@@ -2,6 +2,7 @@
 
 <%
 
+
 sif_file = ""
 
 if context.custom_sif.empty?
@@ -38,24 +39,6 @@ fi
 # PAM auth helper used by RStudio
 export RSTUDIO_AUTH="${PWD}/bin/auth"
 
-# Generate an `rsession` wrapper script
-export RSESSION_WRAPPER_FILE="${PWD}/rsession.sh"
-(
-umask 077
-sed 's/^ \{2\}//' > "${RSESSION_WRAPPER_FILE}" << EOL
-  #!/usr/bin/env bash
-
-  # Log all output from this script
-  export RSESSION_LOG_FILE="${PWD}/rsession.log"
-  exec &>>"\${RSESSION_LOG_FILE}"
-
-  # Launch the original command
-  echo "Launching rsession..."
-  set -x
-  exec rsession --r-libs-user "${R_LIBS_USER}" "\${@}"
-EOL
-)
-chmod 700 "${RSESSION_WRAPPER_FILE}"
 
 # Generate a database.conf file
 export DBCONF="${PWD}/database.conf"
@@ -94,14 +77,9 @@ mkdir -p $MYTEMP/rstudio-server
 
 apptainer version
 
-# There is no `rsession` executable in the apptainer image so we take
-# this out of the rserver flags:
-#   --rsession-path "${RSESSION_WRAPPER_FILE}" \
-
-
 apptainer exec \
   --scratch /run,/var/lib/rstudio-server \
-  --bind /app/containers/Rprofile.site:/usr/local/lib/R/etc/Rprofile.site:ro \
+  --bind <%= session.staged_root.join('Rprofile.site') %>:/usr/local/lib/R/etc/Rprofile.site:ro \
   --bind /fh/fast:/fh/fast \
   --bind /hpc/temp:/hpc/temp \
   --bind /fh/working:/fh/working \
