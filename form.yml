@@ -41,6 +41,10 @@ attributes:
         label: "R Version"
         options:
             - [
+                  "R/4.5.2 with Bioconductor 3.22 OS dependencies",
+                  "https://sif-registry.fredhutch.org/bioconductor_docker_RELEASE_3_22-R-4.5.2.sif",
+              ]
+            - [
                   "R/4.5.1 with Bioconductor 3.21 OS dependencies",
                   "https://sif-registry.fredhutch.org/bioconductor_docker_RELEASE_3_21-R-4.5.1.sif",
               ]
@@ -55,6 +59,6 @@ attributes:
     custom_sif:
         widget: "path_selector"
         label: "Custom Apptainer .sif file"
-        data-target-file-type: files  # Valid values are: files, dirs, or both
+        data-target-file-type: files # Valid values are: files, dirs, or both
         readonly: false
         help: "Optionally use a custom Apptainer .sif file instead of one of the R versions defined above. Use the button below to navigate to its path."
