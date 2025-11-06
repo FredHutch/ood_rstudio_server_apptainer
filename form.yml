@@ -6,7 +6,7 @@ form:
     - rserver
     - custom_sif
     # - Rapp
-    - bc_num_hours
+    - num_days
     # TODO: check if OOD is configured to send email, I checked this box and did not get email.
     - bc_email_on_started
     - num_cores
@@ -30,11 +30,14 @@ attributes:
         max: 8
         step: 1
         id: "num_cores"
-    # it's optional to put bc_num_hours here; if left out, it will still show up in the form, but
+    # it's optional to put num_days here; if left out, it will still show up in the form, but
     # putting us here allows us to set a maximum:
-    bc_num_hours:
+    num_days:
+        value: 1
+        widget: "number_field"
+        label: "Number of days to run"
         min: 1
-        max: 8
+        max: 7
         step: 1
     rserver:
         widget: select
