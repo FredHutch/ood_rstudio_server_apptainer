@@ -89,6 +89,7 @@ apptainer exec \
   --workdir $(mktemp -d) \
   <%= sif_file %> \
   rserver \
+  --auth-timeout-minutes 10080 \
   --www-port ${port} \
   --www-address=0.0.0.0 \
   --auth-none 0 \
