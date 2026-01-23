@@ -52,6 +52,10 @@ EOL
 )
 chmod 700 "${DBCONF}"
 
+echo "session-timeout-minutes=0" > ${PWD}/rsession.conf
+
+export OLDWD=${PWD}
+
 # Set working directory to home directory
 cd "${HOME}"
 
@@ -89,6 +93,7 @@ apptainer exec \
   --workdir $(mktemp -d) \
   <%= sif_file %> \
   rserver \
+  --rsession-config-file ${OLDWD}/rsession.conf \
   --auth-timeout-minutes 10080 \
   --www-port ${port} \
   --www-address=0.0.0.0 \
