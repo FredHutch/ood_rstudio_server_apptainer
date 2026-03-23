@@ -2,6 +2,11 @@
 
 <%
 
+nv = ""
+if context.want_gpu == "1"
+  nv = " --nv "
+end
+
 
 sif_file = ""
 
@@ -81,7 +86,7 @@ mkdir -p $MYTEMP/rstudio-server
 
 apptainer version
 
-apptainer exec \
+apptainer exec <%= nv %> \
   --scratch /run,/var/lib/rstudio-server \
   --bind <%= session.staged_root.join('Rprofile.site') %>:/usr/local/lib/R/etc/Rprofile.site:ro \
   --bind /fh/fast:/fh/fast \
