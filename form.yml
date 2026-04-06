@@ -28,7 +28,7 @@ attributes:
             Number of cores to run RStudio with. The default is 2.
         min: 1
         # TODO what should the maximum be?
-        max: 8
+        max: 36
         step: 1
         id: "num_cores"
     # it's optional to put num_days here; if left out, it will still show up in the form, but
