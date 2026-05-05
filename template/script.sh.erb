@@ -97,6 +97,7 @@ apptainer exec <%= nv %> \
   --bind /loc:/loc \
   --workdir $(mktemp -d) \
   <%= sif_file %> \
+  <%= session.staged_root.join("wrapper.sh") %> \
   rserver \
   --rsession-config-file ${OLDWD}/rsession.conf \
   --auth-timeout-minutes 10080 \
