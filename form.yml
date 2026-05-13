@@ -45,6 +45,10 @@ attributes:
         label: "R Version"
         options:
             - [
+                  "R/4.6.0 with Bioconductor 3.23 OS dependencies",
+                  "https://sif-registry.fredhutch.org/bioconductor_docker_RELEASE_3_23-R-4.6.0.sif",
+              ]
+            - [
                   "R/4.5.2 with Bioconductor 3.22 OS dependencies",
                   "https://sif-registry.fredhutch.org/bioconductor_docker_RELEASE_3_22-R-4.5.2.sif",
               ]
