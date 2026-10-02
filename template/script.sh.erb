@@ -93,7 +93,7 @@ apptainer exec <%= nv %> \
   --bind /hpc/temp:/hpc/temp \
   --bind /fh/working:/fh/working \
   --bind /fh/secure:/fh/secure \
-  --bind /tmp:/tmp \
+  --bind ${TMPDIR}:/tmp \
   --bind /loc:/loc \
   --workdir $(mktemp -d) \
   <%= sif_file %> \
